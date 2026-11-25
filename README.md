@@ -2,7 +2,8 @@
 
 **A pre-flight guardrail for AI apps and agents.** Inspect every LLM call, tool call, shell command, or query *before* it runs, and get a clear `ALLOW`, `WARN`, or `BLOCK` with a reason and a suggested fix.
 
-[![CI](https://github.com/YOUR-ORG/costguard-ai/actions/workflows/ci.yml/badge.svg)](https://github.com/YOUR-ORG/costguard-ai/actions/workflows/ci.yml)
+Repository: https://github.com/mo-dia-elhak/costguard-ai
+
 License: BSL 1.1 (becomes MIT after the Change Date) · Node 20+ · Zero runtime dependencies
 
 ---
@@ -26,7 +27,7 @@ costguard-ai sits between your agent and the outside world. Before anything exec
 const result = guard.evaluate({ kind: "shell_command", input: "rm -rf /" });
 // result.decision    -> "BLOCK"
 // result.reason      -> "Recursive force-delete of a root, home, or wildcard path."
-// result.remediation -> "Delete a specific, narrowly scoped directory instead ..."
+// result.remediation -> "Delete a specific, narrowly scoped directory instead (for example ./build), and review the path first."
 ```
 
 | Check | What it does |
@@ -45,7 +46,7 @@ Zero runtime dependencies. Everything runs locally.
 ## Quickstart
 
 ```bash
-git clone https://github.com/YOUR-ORG/costguard-ai.git
+git clone https://github.com/mo-dia-elhak/costguard-ai.git
 cd costguard-ai
 npm install
 ```
@@ -129,7 +130,7 @@ Real output from `npm run replay` (colors omitted, a few lines trimmed for lengt
          reason: Email address detected (1 occurrence).
          fix:    Replace personal email addresses with placeholders or hashed identifiers when you can.
   #3   BLOCK llm_call       prompt with API key                             $0.0100 ✓
-         reason: API key (sk-...) detected (1 occurrence).
+         reason: API key (sk- prefix) detected (1 occurrence).
          fix:    Remove the key from the prompt/command and load it from an environment variable or secret manager. Rotate it if it has been exposed.
   #4   BLOCK llm_call       prompt with card number                         $0.0100 ✓
   #6   ALLOW llm_call       order number (not a card)                       $0.0100 ✓
@@ -297,11 +298,9 @@ costguard-ai is licensed under the **Business Source License 1.1** (see [`LICENS
 
 ### Commercial License
 
-A Commercial License covers teams, enterprises, and hosted offerings, and is the home for the work that organisations need around the core guard: central policy and rule management, audit export to your SIEM, single sign-on, support, and an SLA. Contact **licensing@your-domain.example** to discuss terms.
+A Commercial License covers teams, enterprises, and hosted offerings, and is the home for the work that organisations need around the core guard: central policy and rule management, audit export to your SIEM, single sign-on, support, and an SLA. Contact **dia.elhak@engineer.com** to discuss terms.
 
 If you are unsure which side of the line you are on, ask. Licensing questions are welcome, and for small teams an inexpensive arrangement is usually straightforward.
-
-> **Maintainer note:** before publishing, replace `[Licensor Name]` and the contact address in `LICENSE` and this README, and replace `YOUR-ORG` in the badge and clone URLs.
 
 ## Contributing
 

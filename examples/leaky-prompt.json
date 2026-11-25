@@ -1,0 +1,13 @@
+{
+  "name": "Leaky prompts: secrets and personal data",
+  "description": "Prompts that contain an email address, an API key, a card number and a cloud credential. All values are fake.",
+  "config": { "maxSteps": 20, "maxBudgetUsd": 5 },
+  "steps": [
+    { "kind": "llm_call", "label": "clean prompt", "input": "Explain the difference between TCP and UDP.", "estimatedCostUsd": 0.01, "expect": "ALLOW" },
+    { "kind": "llm_call", "label": "prompt with email", "input": "Draft a reply to jane.doe@example.com about her refund.", "estimatedCostUsd": 0.01, "expect": "WARN" },
+    { "kind": "llm_call", "label": "prompt with API key", "input": "Why does this fail? client = Client(api_key='sk-FAKEFAKEFAKEFAKEFAKEFAKE1234')", "estimatedCostUsd": 0.01, "expect": "BLOCK" },
+    { "kind": "llm_call", "label": "prompt with card number", "input": "Customer paid with 4111 1111 1111 1111, please confirm the receipt.", "estimatedCostUsd": 0.01, "expect": "BLOCK" },
+    { "kind": "http_request", "label": "request with AWS key", "input": "POST https://example.com/upload?key=AKIAIOSFODNN7EXAMPLE", "estimatedCostUsd": 0, "expect": "BLOCK" },
+    { "kind": "llm_call", "label": "order number (not a card)", "input": "Order 1234 5678 9012 3456 shipped on Monday.", "estimatedCostUsd": 0.01, "expect": "ALLOW" }
+  ]
+}

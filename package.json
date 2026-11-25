@@ -1,0 +1,55 @@
+{
+  "name": "costguard-ai",
+  "version": "0.1.0",
+  "description": "Pre-execution guardrail for AI apps and agents: budget caps, step limits, loop detection, dangerous-command and PII/secret checks, with ALLOW / WARN / BLOCK decisions and replay mode.",
+  "license": "BUSL-1.1",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "bin": {
+    "costguard": "./dist/cli.js"
+  },
+  "files": [
+    "dist",
+    "examples",
+    "LICENSE",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "lint": "eslint .",
+    "test": "node --import tsx --test tests/*.test.ts",
+    "replay": "tsx src/cli.ts replay examples/*.json",
+    "demo": "tsx examples/run-demo.ts",
+    "prepublishOnly": "npm run lint && npm run typecheck && npm test && npm run build"
+  },
+  "keywords": [
+    "ai",
+    "llm",
+    "agents",
+    "guardrails",
+    "budget",
+    "cost-control",
+    "pii",
+    "safety",
+    "loop-detection"
+  ],
+  "devDependencies": {
+    "@eslint/js": "^9.15.0",
+    "@types/node": "^20.17.0",
+    "eslint": "^9.15.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.6.0",
+    "typescript-eslint": "^8.15.0"
+  }
+}

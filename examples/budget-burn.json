@@ -1,0 +1,11 @@
+{
+  "name": "Budget burn: three expensive LLM calls",
+  "description": "Cost is estimated from token counts using the pricing table. The third call would exceed the $1.00 session budget; the same work on a small model fits (with a warning).",
+  "config": { "maxSteps": 50, "maxBudgetUsd": 1.0 },
+  "steps": [
+    { "kind": "llm_call", "model": "large-model", "label": "analyse contract (100k in / 10k out)", "input": "Analyse this contract.", "inputTokens": 100000, "outputTokens": 10000, "expect": "ALLOW" },
+    { "kind": "llm_call", "model": "large-model", "label": "analyse appendix (100k in / 10k out)", "input": "Analyse the appendix.", "inputTokens": 100000, "outputTokens": 10000, "expect": "WARN" },
+    { "kind": "llm_call", "model": "large-model", "label": "analyse annex (100k in / 10k out)", "input": "Analyse the annex.", "inputTokens": 100000, "outputTokens": 10000, "expect": "BLOCK" },
+    { "kind": "llm_call", "model": "small-model", "label": "same, on the cheaper model (100k in / 10k out)", "input": "Analyse the annex.", "inputTokens": 100000, "outputTokens": 10000, "expect": "WARN" }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "name": "Runaway agent: repeated search, then a budget overrun",
+  "description": "An agent keeps repeating the same web search, then tries a large summarisation call that would break the budget.",
+  "config": {
+    "maxSteps": 12,
+    "maxBudgetUsd": 0.5,
+    "repetition": { "window": 10, "warnAfter": 3, "blockAfter": 5 }
+  },
+  "steps": [
+    { "kind": "llm_call", "name": "plan", "input": "Plan how to compare laptops for the user.", "estimatedCostUsd": 0.02, "expect": "ALLOW" },
+    { "kind": "tool_call", "name": "web_search", "input": "best laptops 2026", "estimatedCostUsd": 0.01, "expect": "ALLOW" },
+    { "kind": "tool_call", "name": "web_search", "input": "best laptops 2026", "estimatedCostUsd": 0.01, "expect": "ALLOW" },
+    { "kind": "tool_call", "name": "web_search", "input": "best laptops 2026", "estimatedCostUsd": 0.01, "expect": "WARN" },
+    { "kind": "tool_call", "name": "web_search", "input": "best laptops 2026", "estimatedCostUsd": 0.01, "expect": "WARN" },
+    { "kind": "tool_call", "name": "web_search", "input": "best laptops 2026", "estimatedCostUsd": 0.01, "expect": "BLOCK" },
+    { "kind": "llm_call", "name": "summarise", "input": "Summarise the findings.", "estimatedCostUsd": 0.3, "expect": "ALLOW" },
+    { "kind": "llm_call", "name": "write_report", "input": "Write the full report.", "estimatedCostUsd": 0.2, "expect": "BLOCK" }
+  ]
+}
